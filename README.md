@@ -24,3 +24,7 @@ the following files will be created in your directory
     -package.json
     -.jshintrc
     -config.rb
+
+    npm install
+
+This will add all necessary packages 

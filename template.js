@@ -1,6 +1,6 @@
 /**
  * grunt-init repo
- * https://github.com/marsh73/repo
+ * https://github.com/marsh73/grunt-init-marsh.git
  * Copyright (c) 2014 Justin Marshall
  * Licensed under the MIT license.
  */
