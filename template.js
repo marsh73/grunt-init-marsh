@@ -44,12 +44,16 @@ exports.template = function(grunt, init, done) {
       description: props.description,
       version: props.version,
       devDependencies: {
-        "grunt-contrib-watch": ">=0.4.3",
-        "grunt-contrib-compass": ">=0.8.0",
-        "grunt-contrib-jshint": ">=0.1.1",
+        "grunt": ">=0.4.1",
+        "grunt-contrib-clean": ">=0.5.0",
+        "grunt-contrib-coffee": ">=0.7.0",
+        "grunt-contrib-compass": ">=0.6.0",
+        "grunt-contrib-concat": ">=0.3.0",
+        "grunt-contrib-copy": ">=0.4.1",
+        "grunt-contrib-jshint": ">=0.7.1",
+        "load-grunt-tasks": ">=0.2.0",
         "grunt-contrib-uglify": ">=0.2.0",
-        "grunt-contrib-coffee": ">=0.10.1",
-        "grunt-contrib-concat": ">=0.4.0"
+        "grunt-contrib-watch": ">=0.5.2"
       },
     });
 

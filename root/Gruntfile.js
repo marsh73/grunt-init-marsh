@@ -3,83 +3,101 @@
  * Copyright (c) {%= grunt.template.today('yyyy') %} {%= author_name %}
  */
 
-'use strict';
+ /**
+  * basic
+  * Copyright (c) 2014 Justin Marshall
+  */
 
-module.exports = function(grunt) {
+  'use strict';
 
-  // Project configuration.
-  grunt.initConfig({
-    site: grunt.file.readYAML('_config.yml'),
 
-    jshint: {
-      options: {
-        jshintrc: '.jshintrc'
-      },
-      all: ['Gruntfile.js', 'lib/*.js', 'test/*.js']
-    },
 
-    coffee: {
-      compile: {
-        expand: true,
-        flatten: false,
-        cwd: 'coffee/',
-        src: ['**/*.coffee'],
-        dest: 'js',
-        ext: '.js'
-      }
-    }
+  module.exports = function (grunt) {
 
-    // Before generating any new files,
-    // remove any previously-created files.
-    clean: {
-      example: ['<%= site.destination %>/*.html']
-    },
-    compass: {
-      options: {
-        config: 'config.rb',
-        bundleExec: true,
-        force: true
-      },
-      dev: {
-        options: {
-          environment: 'development'
+    // Load grunt tasks automatically
+    require('load-grunt-tasks')(grunt);
+
+
+    // Define the configuration for all the tasks
+    grunt.initConfig({
+
+      // Watches files for changes and runs tasks based on the changed files
+      watch: {
+        coffee: {
+          files: ['coffee/{,**/}*.coffee'],
+          tasks: 'coffee',
+          bare: true
+        },
+        sass: {
+          files: ['sass/{,*/}*.{scss,sass}'],
+          tasks: ['compass:dest'],
+          force: true
+        },
+        gruntfile: {
+          files: ['Gruntfile.js']
         }
       },
-      dist: {
-        options: {
-          environment: 'production'
-        }
-      }
-    },
 
-
-    watch: {
+      // Make sure code styles are up to par and there are no obvious mistakes
       jshint: {
-        files: ['<%= jshint.all %>'],
-        tasks: ['jshint:lint']
+        options: {
+          jshintrc: '.jshintrc'
+        },
+        all: [
+          'Gruntfile.js'
+        ]
       },
+
+
+      // Compiles CoffeeScript to JavaScript
       coffee: {
-        files: ['coffee/{,**/}*.coffee'],
-        tasks: 'coffee',
-        bare: true
+          compile: {
+            expand: true,
+            flatten: false,
+            cwd: 'coffee/',
+            src: ['**/*.coffee'],
+            dest: 'js',
+            ext: '.js'
+          }
+
       },
+
+
+      // Compiles Sass to CSS and generates necessary files if requested
       compass: {
-        tasks: ['compass:dev']
+        options: {
+          config: 'config.rb',
+          bundleExec: true,
+          force: true,
+          cssDir: 'css'
+        },
+        dev: {
+          options: {
+            environment: 'development'
+          }
+        },
+        dist: {
+          options: {
+            environment: 'production'
+          }
+        }
+      },
+
+
+      copy: {
+        dist: {}
+      },
+
+      uglify: {
+        dist: {}
+      },
+      concat: {
+        dist: {}
       }
-    }
-  });
 
-  // Load npm plugins to provide necessary tasks.
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-compass');
-  grunt.loadNpmTasks('grunt-contrib-coffee');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-watch');
+    });
 
-  // builds to be run.
-  grunt.registerTask('build', ['clean','coffee','compass:dist']);
 
-  // Default to tasks to run with the "grunt" command.
-  grunt.registerTask('default', ['clean', 'jshint', 'watch']);
-};
+    grunt.registerTask('default', ['watch']);
+  };
+
